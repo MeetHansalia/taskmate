@@ -10,17 +10,17 @@ const AddTask = ({tasklist, setTasklist, task, setTask}) => {
             const updateTasklist = tasklist.map((todo)=> (
                 todo.id === task.id ? {id:task.id, name: task.name, time:`${date.toLocaleTimeString()} ${date.toDateString()}` } : todo
             ));
-            setTasklist(updateTasklist)
+            setTasklist(updateTasklist);
+            setTask({});
         }else{
-            const date = new Date();
-        
+            const date = new Date();        
             const newTask = {
                 id: date.getTime(), 
                 name:event.target.task.value, 
                 time:`${date.toLocaleTimeString()} ${date.toDateString()}`
             }
             setTasklist([...tasklist, newTask])
-            event.target.task.value = "";
+            setTask({})
         }
 
       
@@ -32,12 +32,12 @@ const AddTask = ({tasklist, setTasklist, task, setTask}) => {
             <input 
                 type='text' 
                 name='task' 
-                value={task.name} 
+                value={task.name || ""} 
                 autoComplete ='off' 
                 placeholder='Add Task' 
                 maxLength="25" 
                 onChange={event => setTask({...task, name: event.target.value})}/>
-            <button type='submit'>Add</button>
+            <button type='submit'>{task.id ? "Update" : "Add"}</button>
         </form>
     </section>
   )
